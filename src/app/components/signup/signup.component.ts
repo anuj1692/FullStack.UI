@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import ValidateForm from 'src/app/helpers/validateform';
 
 @Component({
   selector: 'app-signup',
@@ -9,9 +11,17 @@ export class SignupComponent implements OnInit {
   type: string = "password";
   isText: boolean = false;
   eyeIcon: string = "fa-eye-slash"
-  constructor() { }
+  signupForm!: FormGroup;
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.signupForm = this.fb.group({
+      firstname:['',Validators.required],
+      lastname:['',Validators.required],
+      email:['',Validators.required],
+      username:['',Validators.required],
+      password:['',Validators.required]
+    })
   }
 
   hideShowPass(){
@@ -20,4 +30,16 @@ export class SignupComponent implements OnInit {
     this.isText? this.type="text" : this.type="password";
   }
 
+  onSubmit(){
+    if(this.signupForm.valid)
+    {
+      console.log(this.signupForm.value);
+      //Send object to dtabase
+    }
+    else{
+      ValidateForm.validateAllFormFields(this.signupForm);
+      alert("Your form is invalid");
+      //throw error using toaster with required field
+    }
+  }
 }
