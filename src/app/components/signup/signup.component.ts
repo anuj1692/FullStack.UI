@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -14,7 +15,13 @@ export class SignupComponent implements OnInit {
   isText: boolean = false;
   eyeIcon: string = "fa-eye-slash"
   signupForm!: FormGroup;
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) { }
+
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private toast: NgToastService
+    ) { }
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
@@ -32,18 +39,17 @@ export class SignupComponent implements OnInit {
     this.isText? this.type="text" : this.type="password";
   }
 
-  onSubmit(){
+  onSignup(){
     if(this.signupForm.valid)
     {
-      console.log(this.signupForm.value);
       //Send object to dtabase
-      this.auth.signup(this.signupForm.value).subscribe({
+      this.authService.signup(this.signupForm.value).subscribe({
         next:(res=>{
-          alert(res.message)
+          this.toast.success({detail:"SUCCESS", summary: res.message, duration: 5000});
           this.router.navigate(['login']);
         }),
         error:(err=>{
-          alert(err?.error.message)
+          this.toast.error({detail:"ERROR", summary: err?.error.message, duration: 5000});
         })
       })
     }
