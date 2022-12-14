@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from 'src/app/helpers/validateform';
 import { AuthService } from 'src/app/services/auth.service';
+import { removeEmitHelper } from 'typescript';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class LoginComponent implements OnInit {
       //Send object to dtabase
       this.authService.login(this.loginForm.value).subscribe({
         next: (res) => {
+          this.authService.storeToken(res.token);
           this.toast.success({detail:"SUCCESS", summary: res.message, duration: 5000});
           this.router.navigate(['employees']);
         },

@@ -5,6 +5,7 @@ import { EditEmployeeComponent } from './components/employees/edit-employee/edit
 import { EmployeesListComponent } from './components/employees/employees-list/employees-list.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -13,15 +14,15 @@ const routes: Routes = [
   },
   {
     path: 'employees',
-    component: EmployeesListComponent
+    component: EmployeesListComponent,canActivate:[AuthGuard]
   },
   {
     path: 'employees/add',
-    component: AddEmployeeComponent
+    component: AddEmployeeComponent,canActivate:[AuthGuard]
   },
   {
     path: 'employees/edit/:id',
-    component: EditEmployeeComponent
+    component: EditEmployeeComponent,canActivate:[AuthGuard]
   },
   {
     path: 'login',

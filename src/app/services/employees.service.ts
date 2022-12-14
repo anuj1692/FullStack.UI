@@ -9,7 +9,7 @@ import { Employee } from '../models/employee.model';
 })
 export class EmployeesService {
 
-  baseApiUrl: string = environment.baseApiUrl;
+  baseApiUrl: string = 'https://localhost:5001'; //environment.baseApiUrl;
   constructor(private http: HttpClient) { }
 
   getAllEmployees(): Observable<Employee[]>
