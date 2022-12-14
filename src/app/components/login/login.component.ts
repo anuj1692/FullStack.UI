@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
     }
     else{
       ValidateForm.validateAllFormFields(this.loginForm);
-      alert("Your form is invalid");
+      //alert("Your form is invalid");
       //throw error using toaster with required field
     }
   }
